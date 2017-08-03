@@ -35,7 +35,8 @@ def make_food():
     food_pos.append(food_position)
     food_stamp=food.stamp()
     food_stamps.append(food_stamp)
-    
+        
+        
 
 def move_snake():
     my_pos= snake.pos()
@@ -53,26 +54,31 @@ def move_snake():
     elif direction==DOWN:
         snake.goto(x_pos, y_pos - SQUARE_SIZE)
         print("you moved down!")
+        
 
-
-    #4. Write the conditions for UP and DOWN on your own
-    ##### YOUR CODE HERE
-    #Stamp new element and append new stamp in list
-    #Remember: The snake position changed - update my_pos()
     my_pos=snake.pos()
     pos_list.append(my_pos)
-    pos_list.pop(0)
-    ######## SPECIAL PLACE - Remember it for Part 5
-    #pop zeroth element in pos_list to get rid of last the last
-    #piece of the tail
     new_stamp = snake.stamp()
     stamp_list.append(new_stamp)
-    old_stamp = stamp_list.pop(0)
-    snake.clearstamp(old_stamp)
+
+    if snake.pos() in food_pos:
+         food_ind= food_pos.index(snake.pos())
+         food.clearstamp(food_stamps[food_ind])
+         food_pos.pop(food_ind)
+         food_stamps.pop(food_ind)
+         print("you have eaten the food")
+         make_food()
+
+    else:
+        old_stamp = stamp_list.pop(0)
+        snake.clearstamp(old_stamp)
+        pos_list.pop(0)
+    
 
     new_pos= snake.pos()
     new_x_pos= new_pos[0]
     new_y_pos= new_pos[1]
+ 
     
     if new_x_pos >= RIGHT_EDGE:
         print ("you hit the right edge! Game over!")
@@ -87,16 +93,14 @@ def move_snake():
         print (" you hit the down edge! Game over!")
         quit()
     global food_stamps, food_pos
+    if pos_list[-1] in pos_list[0:-1]:
+        print( "you ate yourself" )
+        quit()
      
-    if snake.pos() in food_pos:
-         food_ind= food_pos.index(snake.pos())
-         food.clearstamp(food_stamps[food_ind])
-         food_pos.pop(food_ind)
-         food_stamps.pop(food_ind)
-         print("you have eaten the food")
-         make_food()
-         
+
+    
     turtle.ontimer(move_snake,TIME_STEP)
+
 
 ####################################
 
@@ -112,7 +116,7 @@ turtle.setup(SIZE_X,SIZE_Y)
 turtle.penup()
 
 SQUARE_SIZE= 20
-START_LENGTH= 6
+START_LENGTH= 5
 
 pos_list= []
 stamp_list= []
@@ -180,6 +184,9 @@ for this_food_pos in food_pos:
     food_stamps.append(new_stamps)
 
 food.hideturtle()
+
+
+    
     
     
 
