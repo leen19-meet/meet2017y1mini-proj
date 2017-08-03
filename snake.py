@@ -27,6 +27,7 @@ def make_food():
     max_x=int(SIZE_X/2/SQUARE_SIZE)-1
     min_y=-int(SIZE_Y/2/SQUARE_SIZE)+1
     max_y=int(SIZE_Y/2/SQUARE_SIZE)-1
+    
     #Pick a position that is a random multiple of SQUARE_SIZE
     food_x = random.randint(min_x,max_x)*SQUARE_SIZE
     food_y = random.randint(min_y,max_y)*SQUARE_SIZE
@@ -102,21 +103,35 @@ def move_snake():
     turtle.ontimer(move_snake,TIME_STEP)
 
 
+
+
 ####################################
 
 import turtle
 import random
 
+turtle.bgcolor("pink")
 turtle.tracer(1,0)
 
 SIZE_X=800
 SIZE_Y=500
-turtle.setup(SIZE_X,SIZE_Y)
+turtle.setup(SIZE_X+50,SIZE_Y+50)
+turtle.pencolor("red")
+edge= turtle.clone()
+edge.shape('turtle')
+edge.penup()
+edge.goto(-400,250)
+edge.pendown()
+edge.goto(400,250)
+edge.goto(400,-250)
+edge.goto(-400,-250)
+edge.goto(-400, 250)
 
 turtle.penup()
+edge.hideturtle()
 
 SQUARE_SIZE= 20
-START_LENGTH= 5
+START_LENGTH= 1
 
 pos_list= []
 stamp_list= []
@@ -125,6 +140,7 @@ food_stamps= []
 
 snake= turtle.clone()
 snake.shape("square")
+
 
 turtle.hideturtle()
 
@@ -170,9 +186,9 @@ turtle.listen()
 
 move_snake()
 
-turtle.register_shape ("trash.gif")
+turtle.register_shape ("apple.gif")
 food= turtle.clone()
-food.shape("trash.gif")
+food.shape("apple.gif")
 food_pos= [ (100,100), (-100,100), (-100,-100), (100,-100) ]
 food_stamps=[]
 
